@@ -15,14 +15,14 @@
     </properties>
 
     <dependencies>
-        <!-- importing JUnit test framework       -->
+    
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- importing a jar file provided with this recitation (not usually needed) -->
+
         <dependency>
             <groupId>LinkedIntQueue</groupId>
             <artifactId>LinkedIntQueue</artifactId>
@@ -30,11 +30,22 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/LinkedIntQueue.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.20.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- adding and configuring a plugin to collect coverage information during test execution -->
+     
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -55,7 +66,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- a plugin to support `mvn site` to generate a website summarizing the project -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -63,15 +74,16 @@
             </plugin>
         </plugins>
     </build>
+
     <reporting>
         <plugins>
-            <!-- a plugin to include test results in the `mvn site` report -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.22.2</version>
             </plugin>
-            <!-- final plugin to include coverage information in the `mvn site` report -->
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

@@ -1,6 +1,8 @@
 package edu.cmu.cs.cs214.rec02;
 
 import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A resizable-array implementation of the {@link IntQueue} interface. The head of
@@ -8,6 +10,8 @@ import java.util.Arrays;
  * shrink in constant time.
  */
 public class ArrayIntQueue implements IntQueue {
+
+    private static final Logger logger = LogManager.getLogger(ArrayIntQueue.class);
 
     private int[] elementData;
     private int head;
@@ -18,6 +22,7 @@ public class ArrayIntQueue implements IntQueue {
         elementData = new int[INITIAL_SIZE];
         head = 0;
         size = 0;
+        logger.debug("ArrayIntQueue created with initial size {}", INITIAL_SIZE);
     }
 
     @Override
@@ -25,16 +30,19 @@ public class ArrayIntQueue implements IntQueue {
         Arrays.fill(elementData, 0);
         size = 0;
         head = 0;
+        logger.info("Queue cleared");
     }
 
     @Override
     public Integer dequeue() {
         if (isEmpty()) {
+            logger.warn("Attempt to dequeue from empty queue");
             return null;
         }
         Integer value = elementData[head];
         head = (head + 1) % elementData.length;
         size--;
+        logger.debug("Dequeued value: {}, new head: {}, new size: {}", value, head, size);
         return value;
     }
 
@@ -44,24 +52,30 @@ public class ArrayIntQueue implements IntQueue {
         int tail = (head + size) % elementData.length;
         elementData[tail] = value;
         size++;
+        logger.debug("Enqueued value: {}, at index: {}, new size: {}", value, tail, size);
         return true;
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        boolean empty = size == 0;
+        logger.trace("Queue isEmpty check: {}", empty);
+        return empty;
     }
 
     @Override
     public Integer peek() {
         if (isEmpty()) {
+            logger.warn("Attempt to peek from empty queue");
             return null;
         }
+        logger.debug("Peeked value: {}", elementData[head]);
         return elementData[head];
     }
 
     @Override
     public int size() {
+        logger.trace("Queue size requested: {}", size);
         return size;
     }
 
@@ -75,6 +89,7 @@ public class ArrayIntQueue implements IntQueue {
             }
             elementData = newData;
             head = 0;
+            logger.info("Queue capacity increased from {} to {}", oldCapacity, newCapacity);
         }
     }
 }
